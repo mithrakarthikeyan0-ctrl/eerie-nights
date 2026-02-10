@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinetra: The Survival</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Roboto+Mono:wght@300&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="overlay">
+        <div class="blood-drip"></div>
+        <div class="noise"></div>
+        <div class="scanlines"></div>
+        <div class="vignette"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>EERIE SIGHTS <span style="font-size:0.5em;color:#555">v2.0</span></h1>
+            <p class="subtitle">An endless nightmare you cannot escape from</p>
+            <div id="stats-bar">
+                <span class="stat">SANITY: <span id="sanity-val">100</span>%</span>
+                <span class="stat">HEALTH: <span id="health-val">100</span>%</span>
+                <span class="stat">LEVEL: <span id="level-val">1</span></span>
+            </div>
+            <div id="inventory"></div>
+        </header>
+
+        <main id="game-area">
+            <div id="image-container">
+                <img id="scene-image" src="" alt="Scene" style="display:none;">
+            </div>
+            <div id="text-container" class="glitch-text">
+                <p id="scene-text">Initializing nightmare sequence...</p>
+            </div>
+            <div id="choices-container">
+                <button id="start-btn">ENTER THE DARKNESS</button>
+            </div>
+        </main>
+    </div>
+
+    <div id="audio-controls">
+        <button id="mute-btn">🔇 Mute Horror</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
