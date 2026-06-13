@@ -12,8 +12,6 @@ let audioCtx;
 let oscillator;
 let gainNode;
 let isMuted = false;
-
-// Audio Engine for Eerie Drone
 function initAudio() {
     try {
         if (!audioCtx) {
@@ -22,17 +20,15 @@ function initAudio() {
             gainNode = audioCtx.createGain();
 
             oscillator.type = 'sawtooth';
-            oscillator.frequency.value = 50; // Low frequency drone
-            gainNode.gain.value = 0.05; // Low volume
+            oscillator.frequency.value = 50;
+            gainNode.gain.value = 0.05;
 
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
             oscillator.start();
-
-            // LFO for wobbling effect
             const lfo = audioCtx.createOscillator();
             const lfoGain = audioCtx.createGain();
-            lfo.frequency.value = 0.1; // Slow wobble
+            lfo.frequency.value = 0.1; 
             lfoGain.gain.value = 10;
             lfo.connect(lfoGain);
             lfoGain.connect(oscillator.frequency);
@@ -76,10 +72,7 @@ async function startGame() {
 }
 
 async function makeChoice(index) {
-    // Haptic interaction
     playHapticFeedback(50);
-
-    // Disable buttons to prevent double clicks
     const buttons = choicesContainer.querySelectorAll('button');
     buttons.forEach(b => b.disabled = true);
 
@@ -111,43 +104,33 @@ function updateUI(data) {
         console.error("No data received for updateUI");
         return;
     }
-
-    // Text update with simple fade
     sceneText.style.opacity = 0;
     setTimeout(() => {
         sceneText.innerText = data.message || "The void is silent.";
         sceneText.style.opacity = 1;
-
-        // Add glitch effect class momentarily
         sceneText.parentElement.classList.add('glitching');
         setTimeout(() => sceneText.parentElement.classList.remove('glitching'), 500);
     }, 200);
 
-    // Update Stats
     if (data.stats) {
         statsBar.sanity.innerText = data.stats.sanity;
         statsBar.health.innerText = data.stats.health;
         statsBar.level.innerText = data.stats.level;
-
-        // Visual feedback based on stats
         if (data.stats.health < 30) {
             document.body.style.boxShadow = "inset 0 0 100px red";
-            playHapticFeedback([100, 50, 100, 50, 100]); // Heartbeat
+            playHapticFeedback([100, 50, 100, 50, 100]); 
         } else {
             document.body.style.boxShadow = "none";
         }
     }
 
-    // Update Image
     if (data.image) {
         sceneImage.style.display = 'block';
         sceneImage.src = data.image;
         sceneImage.onerror = function () {
-            this.style.display = 'none'; // Hide if fails to load
+            this.style.display = 'none';
         };
     }
-
-    // Update Choices
     choicesContainer.innerHTML = '';
     choicesContainer.className = 'choices';
 
@@ -159,7 +142,6 @@ function updateUI(data) {
             choicesContainer.appendChild(btn);
         });
     } else if (!data.game_over) {
-        // Fallback if no choices and not game over (shouldn't happen usually)
         choicesContainer.innerHTML = '<p class="stat">...waiting...</p>';
     }
 }
@@ -171,7 +153,7 @@ function handleGameOver(data) {
     choicesContainer.innerHTML = '<button onclick="location.reload()">TRY AGAIN IF YOU DARE</button>';
     playHapticFeedback([200, 100, 500]);
     if (audioCtx && oscillator) {
-        oscillator.frequency.value = 20; // Drop pitch 
+        oscillator.frequency.value = 20;
     }
 }
 
